@@ -58,7 +58,7 @@ def main():
         if lmList == []:
             print(lmList)
         else:
-            print(lmList[14])
+            print(lmList[14])  #lmList[?]---->https://google.github.io/mediapipe/solutions/pose.html----> See Fig 4.
             cv2.circle(img, (lmList[14][1], lmList[14][2]), 15, (0, 0, 255), cv2.FILLED)
 
         cTime = time.time()
