@@ -4,23 +4,19 @@ import time
 
 class PoseDetector:
 
-    def __init__(self, mode = False, upBody = False, smooth=True, detectionCon = 0.5, trackCon = 0.5):
+    def __init__(self, mode = False, model = 1, smooth=True, detectionCon = 0.5, trackCon = 0.5):
 
         self.mode = mode
-        self.upBody = upBody
+        self.model = model
         self.smooth = smooth
         self.detectionCon = detectionCon
         self.trackCon = trackCon
 
-        static_image_mode = False,
-        model_complexity = 1,
-        smooth_landmarks = True,
-        min_detection_confidence = 0.5,
-        min_tracking_confidence = 0.5):
+
 
         self.mpDraw = mp.solutions.drawing_utils
         self.mpPose = mp.solutions.pose
-        self.pose = self.mpPose.Pose(self.mode, self.upBody, self.smooth, self.detectionCon, self.trackCon)
+        self.pose = self.mpPose.Pose(self.mode, self.model, self.smooth, self.detectionCon, self.trackCon)
 
     def findPose(self, img, draw=True):
 
@@ -33,17 +29,19 @@ class PoseDetector:
 
         return img
 
-    def getPosition(self, img, draw=True):
+    def findPosition(self, img, draw=True):
         lmList = []
         if self.results.pose_landmarks:
             for id, lm in enumerate(self.results.pose_landmarks.landmark):
                  h, w, c = img.shape
-        # print(id, lm)
-        cx, cy = int(lm.x * w), int(lm.y * h)
-        lmList.append([id, cx, cy])
-        if draw:
-            cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
+                 #print(id, lm)
+                 cx, cy = int(lm.x * w), int(lm.y * h)
+                 lmList.append([id, cx, cy])
+                 if draw:
+                    cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
+
         return lmList
+
 
 
 
@@ -55,7 +53,7 @@ def main():
     while True:
         success, img = cap.read()
         img = detector.findPose(img)
-        lmList = detector.getPosition(img)
+        lmList = detector.findPosition(img)
         print(lmList)
 
         cTime = time.time()
