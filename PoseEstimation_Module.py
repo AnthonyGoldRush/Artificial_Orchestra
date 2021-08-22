@@ -53,8 +53,13 @@ def main():
     while True:
         success, img = cap.read()
         img = detector.findPose(img)
-        lmList = detector.findPosition(img)
-        print(lmList)
+        lmList = detector.findPosition(img, draw=False)
+
+        if lmList == []:
+            print(lmList)
+        else:
+            print(lmList[14])
+            cv2.circle(img, (lmList[14][1], lmList[14][2]), 15, (0, 0, 255), cv2.FILLED)
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
