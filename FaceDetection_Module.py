@@ -8,7 +8,7 @@ class FaceDetector():
         self.minDetectionCon = minDetectionCon
         self.mpFaceDetection = mp.solutions.face_detection
         self.mpDraw =  mp.solutions.drawing_utils
-        self.FaceDetection = self.mpFaceDetection.FaceDetection(0.75)
+        self.FaceDetection = self.mpFaceDetection.FaceDetection(self.minDetectionCon)
 
 
     def findFaces(self, img, draw = True):
